@@ -1,4 +1,5 @@
 #include <msp430.h>
+#include <string.h>
 
 
 int display_state = 0;
@@ -7,15 +8,15 @@ char column;
 
 const char Font[8][16] =
 {
-        //  0     1     2     3     4     5     6     7     8     9     A     B     C     D     E     F
-        {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
-        {0x28, 0x08, 0x18, 0x3C, 0x10, 0x3C, 0x08, 0x3E, 0x3C, 0x3C, 0x18, 0x38, 0x38, 0x30, 0x3C, 0x3C},
-        {0x44, 0x18, 0x24, 0x04, 0x10, 0x20, 0x10, 0x02, 0x24, 0x44, 0x24, 0x24, 0x44, 0x28, 0x20, 0x20},
-        {0x44, 0x08, 0x08, 0x08, 0x20, 0x38, 0x20, 0x04, 0x18, 0x44, 0x24, 0x24, 0x40, 0x24, 0x38, 0x3C},
-        {0x44, 0x08, 0x10, 0x18, 0x24, 0x04, 0x3C, 0x08, 0x18, 0x3C, 0x3C, 0x38, 0x40, 0x24, 0x20, 0x20},
-        {0x44, 0x08, 0x10, 0x04, 0x3E, 0x04, 0x24, 0x10, 0x24, 0x04, 0x24, 0x24, 0x44, 0x24, 0x20, 0x20},
-        {0x28, 0x3C, 0x3C, 0x38, 0x04, 0x38, 0x18, 0x10, 0x3C, 0x04, 0x42, 0x38, 0x38, 0x38, 0x3C, 0x20},
-        {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
+        //  0     1     2     3     4     5     6     7     8     9     A     B     C     D     E     F  SPACE
+        {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+        {0x28, 0x08, 0x18, 0x3C, 0x10, 0x3C, 0x08, 0x3E, 0x3C, 0x3C, 0x18, 0x38, 0x38, 0x30, 0x3C, 0x3C, 0x00},
+        {0x44, 0x18, 0x24, 0x04, 0x10, 0x20, 0x10, 0x02, 0x24, 0x44, 0x24, 0x24, 0x44, 0x28, 0x20, 0x20, 0x00},
+        {0x44, 0x08, 0x08, 0x08, 0x20, 0x38, 0x20, 0x04, 0x18, 0x44, 0x24, 0x24, 0x40, 0x24, 0x38, 0x3C, 0x00},
+        {0x44, 0x08, 0x10, 0x18, 0x24, 0x04, 0x3C, 0x08, 0x18, 0x3C, 0x3C, 0x38, 0x40, 0x24, 0x20, 0x20, 0x00},
+        {0x44, 0x08, 0x10, 0x04, 0x3E, 0x04, 0x24, 0x10, 0x24, 0x04, 0x24, 0x24, 0x44, 0x24, 0x20, 0x20, 0x00},
+        {0x28, 0x3C, 0x3C, 0x38, 0x04, 0x38, 0x18, 0x10, 0x3C, 0x04, 0x42, 0x38, 0x38, 0x38, 0x3C, 0x20, 0x00},
+        {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
 };
 
 
@@ -107,34 +108,49 @@ void outputDisplayBuffer()
     P2OUT &= ~0x10;                 // LCD CS low
 }
 
+int findNumberInArray(int number, int *haystack)
+{
+    int i;
+    haystack++;
 
-void printCharacter(char word[]) {
+    for (i=0; i<3; i++) {
+        if (*(haystack) == number) {
+            return i;
+        }
+        haystack= haystack + 2;
+    }
+
+    return -1;
+}
+
+
+void printWord(char word[], int height)
+{
     int k = 0;
     int i = 0;
-     for ( i=0; i<3; i++)
-     {
-         switch(word[i]) {
-             case 'a':
-                 for (i=0; i<8; i++)
-                 {
-                    DisplayBuffer[i][k] = ~Font[i][10];
-                 }
-                 break;
-             case 'b':
-                 for (i=0; i<8; i++)
-                 {
-                    DisplayBuffer[i][k] = ~Font[i][11];
-                 }
-                 break;
-             case 'c':
-                 for (i=0; i<8; i++)
-                 {
-                    DisplayBuffer[i][k] = ~Font[i][12];
-                 }
-                 break;
-         }
-         k+= 10;
-     }
+    int l = 0;
+    int index;
+    int count = strlen(word);
+
+    int letterLinkTable[3][2] = {
+       {10, 97} ,
+       {11, 98} ,
+       {12, 99} ,
+       {13, 100},
+       {14, 101},
+       {15, 102},
+    };
+
+    for ( l=0; l<count; l++)
+    {
+        index = letterLinkTable[findNumberInArray((int)word[l], &letterLinkTable[0][0])][0];
+
+        for (i=0; i<8; i++)
+        {
+            DisplayBuffer[i+height][k] = ~Font[i][index];
+        }
+        k++;
+    }
 }
 
 int k = 0;
@@ -146,42 +162,62 @@ void buildScene()
 
     initDisplayBuffer(0xFF);
 
+    printWord("ababababdef", 0);
+    printWord("aaaaaaaaaaaa", 10);
+    printWord("abababababab", 20);
+    printWord("aaaaaaaaaaaa", 30);
+
+    printWord("a", 40);
+
+    //Display Numbers
+
+//    for (i=0; i<8; i++)
+//    {
+//        for(j=0; j<10; j++)
+//        {
+//            DisplayBuffer[i+72][j] = ~Font[i][j];
+//        }
+//    }
+
+    //Display letters A - F
+
+//    for (i=0; i<8; i++)
+//    {
+//        for(j=0; j<6; j++)
+//        {
+//            DisplayBuffer[i+80][j] = ~Font[i][j+10];
+//        }
+//    }
+
+    //Display Tanks
+//    for (i=0; i<8; i++)
+//    {
+//        DisplayBuffer[i+10][3] = ~Tank[i][0];
+//        DisplayBuffer[i+10][5] = ~Tank[i][1];
+//        DisplayBuffer[i+10][7] = ~Tank[i][2];
+//        DisplayBuffer[i+10][9] = ~Tank[i][3];
+//    }
+
+    //A moving tank downwards
+//    for (i=0; i<8; i++)
+//    {
+//        DisplayBuffer[(i/8)+k+10][3] = ~Tank[i][0];
+//        k = (k+1) % 80;
+//    }
+
+    //Moving a downwards
     for (i=0; i<8; i++)
     {
-        for(j=0; j<10; j++)
-        {
-            DisplayBuffer[i+72][j] = ~Font[i][j];
-        }
-    }
-
-
-    printCharacter("c");
-    printCharacter("a");
-
-
-
-
-    for (i=0; i<8; i++)
-    {
-        for(j=0; j<6; j++)
-        {
-            DisplayBuffer[i+80][j] = ~Font[i][j+10];
-        }
-    }
-
-    for (i=0; i<8; i++)
-    {
-        DisplayBuffer[i+10][3] = ~Tank[i][0];
-        DisplayBuffer[i+10][5] = ~Tank[i][1];
-        DisplayBuffer[i+10][7] = ~Tank[i][2];
-        DisplayBuffer[i+10][9] = ~Tank[i][3];
-    }
-
-    for (i=0; i<8; i++)
-    {
-        DisplayBuffer[(i/8)+k+10][3] = ~Tank[i][0];
+        DisplayBuffer[(i/8)+k+10][3] = ~Font[i][10];
         k = (k+1) % 80;
     }
+
+//    for (i=0; i<8; i++)
+//    {
+//        DisplayBuffer[70][(i)+k+10] = ~Font[i][10];
+//        k = (k+1) % 80;
+//    }
+
 }
 
 
@@ -190,72 +226,72 @@ void buildScene()
 /********************************************************************/
 
 
-//void LCD_Handler()
-//{
-//    switch (display_state)
-//    {
-//    case 0: // build scene
-//        buildScene();
-//        display_state = 1;
-//        break;
-//
-//    case 1: // display scene
-//        if (UCB0IFG & UCTXIFG)
-//        {
-//            if (line == 0)
-//            {
-//                P2OUT |= 0x10;                  // Enable LCD CS
-//                UCB0TXBUF = 0x80;
-//                column = 0;
-//                line++;
-//            }
-//            else if ((line >= 1) && (line <= 96))
-//            {
-//                if (column == 0)
-//                {
-//                    UCB0TXBUF = reverse(line);
-//                    column++;
-//                }
-//                else if ((column >= 1) && (column <= 12))
-//                {
-//                    UCB0TXBUF =  DisplayBuffer[line-1][column-1];
-//                    column++;
-//                }
-//                else
-//                {
-//                    UCB0TXBUF = 0x00;
-//                    column = 0;
-//                    line++;
-//                }
-//            }
-//            else if (line == 97)
-//            {
-//                UCB0TXBUF = 0x00;
-//                line++;
-//            }
-//            else if (line == 98)
-//            {
-//                line++;
-//            }
-//            else
-//            {
-//                if ((UCB0STATW & UCBBUSY) == 0)
-//                {
-//                    //Ensure a 2us min delay to meet the LCD's thSCS
-//                    //__delay_cycles(16);
-//                    line = 0;
-//                    P2OUT &= ~0x10;                 // Disable LCD CS
-//                    display_state = 0;
-//                }
-//            }
-//        }
-//        break;
-//
-//    default:
-//        display_state = 0;
-//        break;
-//    }
-//}
+void LCD_Handler()
+{
+    switch (display_state)
+    {
+    case 0: // build scene
+        buildScene();
+        display_state = 1;
+        break;
+
+    case 1: // display scene
+        if (UCB0IFG & UCTXIFG)
+        {
+            if (line == 0)
+            {
+                P2OUT |= 0x10;                  // Enable LCD CS
+                UCB0TXBUF = 0x80;
+                column = 0;
+                line++;
+            }
+            else if ((line >= 1) && (line <= 96))
+            {
+                if (column == 0)
+                {
+                    UCB0TXBUF = reverse(line);
+                    column++;
+                }
+                else if ((column >= 1) && (column <= 12))
+                {
+                    UCB0TXBUF =  DisplayBuffer[line-1][column-1];
+                    column++;
+                }
+                else
+                {
+                    UCB0TXBUF = 0x00;
+                    column = 0;
+                    line++;
+                }
+            }
+            else if (line == 97)
+            {
+                UCB0TXBUF = 0x00;
+                line++;
+            }
+            else if (line == 98)
+            {
+                line++;
+            }
+            else
+            {
+                if ((UCB0STATW & UCBBUSY) == 0)
+                {
+                    //Ensure a 2us min delay to meet the LCD's thSCS
+                    //__delay_cycles(16);
+                    line = 0;
+                    P2OUT &= ~0x10;                 // Disable LCD CS
+                    display_state = 0;
+                }
+            }
+        }
+        break;
+
+    default:
+        display_state = 0;
+        break;
+    }
+}
 
 
 int heartbeat = 1;
@@ -280,9 +316,9 @@ int main(void)
 
     PM5CTL0 &= ~LOCKLPM5;
 
-    P1DIR |= 0x01;
+    P1DIR |= ~0x01;
 
-    P4DIR |= 0x40;
+    P4DIR |= ~0x40;
     TA0CCR0 = 1024;
     TA0CCTL0 = 0x10;
     TA0CTL = TASSEL_2 + MC_1;
@@ -317,6 +353,41 @@ int main(void)
     for (;;) {
         buildScene();
         outputDisplayBuffer();
+//        LCD_Handler();
     }
 
 }
+
+
+
+
+
+
+//old print word func
+
+//    for ( l=0; l<12; l++)
+//    {
+//         switch(word[l]) {
+//             case 'a':
+//                 for (i=0; i<8; i++)
+//                 {
+//                    DisplayBuffer[i+height][k] = ~Font[i][10];
+//                 }
+//                 k++;
+//                 break;
+//             case 'b':
+//                 for (i=0; i<8; i++)
+//                 {
+//                     DisplayBuffer[i+height][k] = ~Font[i][11];
+//                 }
+//                 k++;
+//                 break;
+//             case 'c':
+//                 for (i=0; i<8; i++)
+//                 {
+//                     DisplayBuffer[i+height][k] = ~Font[i][12];
+//                 }
+//                 k++;
+//                 break;
+//         }
+//    }

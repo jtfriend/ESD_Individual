@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="com.ti.ccstudio.debug.launchType.device.debugging">
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_DEBUGGER_PROPERTIES.C:\Users\josep\OneDrive\Documents\ESD_Individual\LCD\targetConfigs\MSP430FR5969.ccxml.TI MSP430 USB1/MSP430" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&#10;&lt;PropertyValues&gt;&#10;&#10;  &lt;property id=&quot;ConnectOnStartup&quot;&gt;&#10;    &lt;curValue&gt;1&lt;/curValue&gt;&#10;  &lt;/property&gt;&#10;&#10;  &lt;property id=&quot;EnableInstalledBreakpoint&quot;&gt;&#10;    &lt;curValue&gt;1&lt;/curValue&gt;&#10;  &lt;/property&gt;&#10;&#10;&lt;/PropertyValues&gt;&#10;"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_DEBUGGER_PROPERTIES.H:\Git\ESD\LCD\targetConfigs\MSP430FR5969.ccxml.TI MSP430 USB1/MSP430" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot; ?&gt;&#10;&lt;PropertyValues&gt;&#10;&#10;  &lt;property id=&quot;ConnectOnStartup&quot;&gt;&#10;    &lt;curValue&gt;1&lt;/curValue&gt;&#10;  &lt;/property&gt;&#10;&#10;  &lt;property id=&quot;EnableInstalledBreakpoint&quot;&gt;&#10;    &lt;curValue&gt;1&lt;/curValue&gt;&#10;  &lt;/property&gt;&#10;&#10;&lt;/PropertyValues&gt;&#10;"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROGRAM.C:\Users\josep\OneDrive\Documents\ESD_Individual\LCD\targetConfigs\MSP430FR5969.ccxml.TI MSP430 USB1/MSP430" value="${build_artifact:LCD}"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROGRAM.H:\Git\ESD\LCD\targetConfigs\MSP430FR5969.ccxml.TI MSP430 USB1/MSP430" value="${build_artifact:LCD}"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROJECT.C:\Users\josep\OneDrive\Documents\ESD_Individual\LCD\targetConfigs\MSP430FR5969.ccxml.TI MSP430 USB1/MSP430" value="LCD"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_PROJECT.H:\Git\ESD\LCD\targetConfigs\MSP430FR5969.ccxml.TI MSP430 USB1/MSP430" value="LCD"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.ATTR_TARGET_CONFIG" value="${target_config_active_default:LCD}"/>
+<stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.C:\Users\josep\OneDrive\Documents\ESD_Individual\LCD\targetConfigs\MSP430FR5969.ccxml.TI MSP430 USB1/MSP430" value="C:/Users\josep\OneDrive\Documents\ESD_Individual\LCD\Debug\LCD.out"/>
 <stringAttribute key="com.ti.ccstudio.debug.debugModel.MRU_PROGRAM.H:\Git\ESD\LCD\targetConfigs\MSP430FR5969.ccxml.TI MSP430 USB1/MSP430" value="H:/Git\ESD\LCD\Debug\LCD.out"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
 <listEntry value="/LCD"/>
