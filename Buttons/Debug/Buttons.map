@@ -1,9 +1,9 @@
 ******************************************************************************
                   MSP430 Linker PC v18.1.3                     
 ******************************************************************************
->> Linked Mon Nov 26 19:25:58 2018
+>> Linked Mon Nov 26 19:25:55 2018
 
-OUTPUT FILE NAME:   <MSP430Intro.out>
+OUTPUT FILE NAME:   <Buttons.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs_mpu"  address: 00004400
 
 
@@ -18,8 +18,8 @@ MEMORY CONFIGURATION
   INFOC                 00001880   00000080  00000000  00000080  RWIX
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
-  RAM                   00001c00   00000800  000000a2  0000075e  RWIX
-  FRAM                  00004400   0000bb80  00000056  0000bb2a  RWIX
+  RAM                   00001c00   00000800  000000a4  0000075c  RWIX
+  FRAM                  00004400   0000bb80  00000058  0000bb28  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00004000  00000170  00003e90  RWIX
+  FRAM2                 00010000   00004000  00000188  00003e78  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -108,10 +108,10 @@ section   page    origin      length       input sections
 .ipe_vars 
 *          0    00004400    00000000     UNINITIALIZED
 
-.cinit     0    00004440    00000016     
-                  00004440    00000008     (__TI_handler_table)
-                  00004448    00000006     (.cinit..data.load) [load image, compression = lzss]
-                  0000444e    00000008     (__TI_cinit_table)
+.cinit     0    00004440    00000018     
+                  00004440    00000008     (.cinit..data.load) [load image, compression = lzss]
+                  00004448    00000008     (__TI_handler_table)
+                  00004450    00000008     (__TI_cinit_table)
 
 .binit     0    00004400    00000000     
 
@@ -124,8 +124,8 @@ section   page    origin      length       input sections
                   00004420    00000018     main.obj (.text:_isr:Timer0_A0)
                   00004438    00000008     rts430x_lc_rd_eabi.lib : isr_trap.asm.obj (.text:_isr:__TI_ISR_TRAP)
 
-.data      0    00001c00    00000002     UNINITIALIZED
-                  00001c00    00000002     main.obj (.data)
+.data      0    00001c00    00000004     UNINITIALIZED
+                  00001c00    00000004     main.obj (.data)
 
 .stack     0    00002360    000000a0     UNINITIALIZED
                   00002360    00000004     rts430x_lc_rd_eabi.lib : boot.c.obj (.stack)
@@ -228,25 +228,26 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.c.obj (.reset)
 
-.text      0    00010000    00000170     
+.text      0    00010000    00000188     
                   00010000    00000076     rts430x_lc_rd_eabi.lib : copy_decompress_lzss.c.obj (.text:decompress:lzss:__TI_decompress_lzss)
                   00010076    00000054                            : autoinit.c.obj (.text:__TI_auto_init_nobinit_nopinit_hold_wdt:__TI_auto_init_nobinit_nopinit_hold_wdt)
-                  000100ca    00000048     main.obj (.text:main)
-                  00010112    0000002c     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  0001013e    00000014     rts430x_lc_rd_eabi.lib : memcpy.c.obj (.text:memcpy)
-                  00010152    00000012                            : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
-                  00010164    00000006                            : exit.c.obj (.text:abort)
-                  0001016a    00000004                            : pre_init.c.obj (.text:_system_pre_init)
-                  0001016e    00000002                            : startup.c.obj (.text:_system_post_cinit)
+                  000100ca    00000034     main.obj (.text:main)
+                  000100fe    0000002c     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
+                  0001012a    0000002c     main.obj (.text:button_handler)
+                  00010156    00000014     rts430x_lc_rd_eabi.lib : memcpy.c.obj (.text:memcpy)
+                  0001016a    00000012                            : copy_decompress_none.c.obj (.text:decompress:none:__TI_decompress_none)
+                  0001017c    00000006                            : exit.c.obj (.text:abort)
+                  00010182    00000004                            : pre_init.c.obj (.text:_system_pre_init)
+                  00010186    00000002                            : startup.c.obj (.text:_system_post_cinit)
 
 MODULE SUMMARY
 
        Module                       code   ro data   rw data
        ------                       ----   -------   -------
     .\
-       main.obj                     96     2         2      
+       main.obj                     120    2         4      
     +--+----------------------------+------+---------+---------+
-       Total:                       96     2         2      
+       Total:                       120    2         4      
                                                             
     C:\ti\ccsv8\ccs_base\msp430\lib\FR59xx\MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib
        mpu_init.o                   44     0         0      
@@ -291,20 +292,20 @@ MODULE SUMMARY
        Total:                       292    50        0      
                                                             
        Stack:                       0      0         160    
-       Linker Generated:            0      22        0      
+       Linker Generated:            0      24        0      
     +--+----------------------------+------+---------+---------+
-       Grand Total:                 432    74        162    
+       Grand Total:                 456    76        164    
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 0000444e records: 1, size/record: 8, table size: 8
-	.data: load addr=00004448, load size=00000006 bytes, run addr=00001c00, run size=00000002 bytes, compression=lzss
+__TI_cinit_table @ 00004450 records: 1, size/record: 8, table size: 8
+	.data: load addr=00004440, load size=00000008 bytes, run addr=00001c00, run size=00000004 bytes, compression=lzss
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 00004440 records: 2, size/record: 4, table size: 8
+__TI_handler_table @ 00004448 records: 2, size/record: 4, table size: 8
 	index: 0, handler: __TI_decompress_lzss
 	index: 1, handler: __TI_decompress_none
 
@@ -570,7 +571,7 @@ address   name
 000009ce  AESAXIN_L                              
 000004be  BCD2BIN                                
 000004bc  BIN2BCD                                
-00010164  C$$EXIT                                
+0001017c  C$$EXIT                                
 0000043e  CAPTIO0CTL                             
 0000043f  CAPTIO0CTL_H                           
 0000043e  CAPTIO0CTL_L                           
@@ -1114,14 +1115,14 @@ address   name
 0000015c  WDTCTL_L                               
 00002400  __STACK_END                            
 000000a0  __STACK_SIZE                           
-0000444e  __TI_CINIT_Base                        
-00004456  __TI_CINIT_Limit                       
-00004440  __TI_Handler_Table_Base                
-00004448  __TI_Handler_Table_Limit               
+00004450  __TI_CINIT_Base                        
+00004458  __TI_CINIT_Limit                       
+00004448  __TI_Handler_Table_Base                
+00004450  __TI_Handler_Table_Limit               
 00004438  __TI_ISR_TRAP                          
 00010076  __TI_auto_init_nobinit_nopinit_hold_wdt
 00010000  __TI_decompress_lzss                   
-00010152  __TI_decompress_none                   
+0001016a  __TI_decompress_none                   
 0000ffcc  __TI_int30                             
 0000ffce  __TI_int31                             
 0000ffd0  __TI_int32                             
@@ -1152,20 +1153,22 @@ ffffffff  __TI_prof_data_size
 ffffffff  __TI_prof_data_start                   
 ffffffff  __c_args__                             
 00000001  __mpu_enable                           
-00010112  __mpu_init                             
+000100fe  __mpu_init                             
 00004400  _c_int00_noargs_mpu                    
 0000fffe  _reset_vector                          
 00002360  _stack                                 
-0001016e  _system_post_cinit                     
-0001016a  _system_pre_init                       
-00010164  abort                                  
+00010186  _system_post_cinit                     
+00010182  _system_pre_init                       
+0001017c  abort                                  
+0001012a  button_handler                         
+00001c02  button_state                           
 00004400  fram_ipe_end                           
 00004400  fram_ipe_start                         
 00004400  fram_rw_start                          
 00004400  fram_rx_start                          
 00001c00  heartbeat                              
 000100ca  main                                   
-0001013e  memcpy                                 
+00010156  memcpy                                 
 0000a501  mpu_ctl0_value                         
 00001513  mpu_sam_value                          
 00000440  mpu_segment_border1                    
@@ -1979,6 +1982,7 @@ address   name
 000009cf  AESAXIN_H                              
 00001513  mpu_sam_value                          
 00001c00  heartbeat                              
+00001c02  button_state                           
 00002360  _stack                                 
 00002400  __STACK_END                            
 00004400  _c_int00_noargs_mpu                    
@@ -1988,10 +1992,10 @@ address   name
 00004400  fram_rx_start                          
 00004420  Timer0_A0                              
 00004438  __TI_ISR_TRAP                          
-00004440  __TI_Handler_Table_Base                
-00004448  __TI_Handler_Table_Limit               
-0000444e  __TI_CINIT_Base                        
-00004456  __TI_CINIT_Limit                       
+00004448  __TI_Handler_Table_Base                
+00004450  __TI_CINIT_Base                        
+00004450  __TI_Handler_Table_Limit               
+00004458  __TI_CINIT_Limit                       
 0000a501  mpu_ctl0_value                         
 0000ffcc  __TI_int30                             
 0000ffce  __TI_int31                             
@@ -2022,16 +2026,17 @@ address   name
 00010000  __TI_decompress_lzss                   
 00010076  __TI_auto_init_nobinit_nopinit_hold_wdt
 000100ca  main                                   
-00010112  __mpu_init                             
-0001013e  memcpy                                 
-00010152  __TI_decompress_none                   
-00010164  C$$EXIT                                
-00010164  abort                                  
-0001016a  _system_pre_init                       
-0001016e  _system_post_cinit                     
+000100fe  __mpu_init                             
+0001012a  button_handler                         
+00010156  memcpy                                 
+0001016a  __TI_decompress_none                   
+0001017c  C$$EXIT                                
+0001017c  abort                                  
+00010182  _system_pre_init                       
+00010186  _system_post_cinit                     
 ffffffff  __TI_pprof_out_hndl                    
 ffffffff  __TI_prof_data_size                    
 ffffffff  __TI_prof_data_start                   
 ffffffff  __c_args__                             
 
-[857 symbols]
+[859 symbols]
