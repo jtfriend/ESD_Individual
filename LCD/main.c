@@ -95,22 +95,33 @@ void outputDisplayBuffer()
     P2OUT &= ~0x10;                 // LCD CS low
 }
 
-int findNumberInArray(int number, int *haystack)
+
+/* Desc:    Checks to see if the number is in an array*/
+/* Returns: An ingeter, the index in the array or -1 if not found*/
+/* Parameters: int needle - a number to be checked against*/
+/*             int *haystack - a pointer to an array to be indexed through*/
+
+int findNumberInArray(int needle, int *haystack)
 {
     int i;
+    /*move to next position in 2d array*/
     haystack++;
 
-
     for (i=0; i<28; i++) {
-        if (*(haystack) == number) {
+        if (*(haystack) == needle) {
             return i;
         }
+        /*move to next first column position in 2d array*/
         haystack= haystack + 2;
     }
 
     return -1;
 }
 
+/* Desc:    Prints word to LCD display*/
+/* Returns: void*/
+/* Parameters: char word[] - a string to be printed*/
+/*             int height - a position in y axis of the LCD display*/
 
 void printWord(char word[], int height)
 {
@@ -120,6 +131,7 @@ void printWord(char word[], int height)
     int index;
     int count = strlen(word);
 
+    /*table to link ascii char to index in array of char*/
     int letterLinkTable[27][2] = {
         {10, 97} , //a
         {11, 98} , //b
@@ -152,10 +164,12 @@ void printWord(char word[], int height)
 
     for ( l=0; l<count; l++)
     {
+        /*finds index to link to table*/
         index = letterLinkTable[findNumberInArray((int)word[l], &letterLinkTable[0][0])][0];
 
         for (i=0; i<8; i++)
         {
+            /*print to display at height*/
             DisplayBuffer[i+height][k] = ~Font[i][index];
         }
         k++;
@@ -172,7 +186,6 @@ void buildScene()
     printWord("    world   ", 40);
 
 }
-
 
 int heartbeat = 1;
 
