@@ -1,0 +1,1 @@
+"./SliderHandler.obj" "./Uart_A0.obj" "./lcdHandler.obj" "./main.obj" "./timer.obj" "../lnk_msp430fr5969.cmd" -llibmpu_init.a -llibmath.a -llibc.a 
