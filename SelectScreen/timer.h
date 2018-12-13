@@ -7,6 +7,12 @@
 
 #ifndef TIMER_H_
 #define TIMER_H_
+
+extern int myGlobal;
+extern int heartbeat;
+extern int step;
+extern int option;
+
 extern volatile int adcReading;
 void initTimer(void);
 

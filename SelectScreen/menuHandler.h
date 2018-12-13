@@ -8,6 +8,6 @@
 #ifndef MENUHANDLER_H_
 #define MENUHANDLER_H_
 
-void menuHandler(void);
+void menuHandler(int selectedOption);
 
 #endif /* MENUHANDLER_H_ */

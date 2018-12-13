@@ -6,16 +6,19 @@
 #include "lcdHandler.h"
 #include "menuHandler.h"
 #include "timer.h"
-#include "ADC_1.h"
+//#include "ADC_1.h"
 #include "stdio.h"
 #include "string.h"
+
+
 
 int main(void) {
 
 	  WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
 	  PM5CTL0 &= ~LOCKLPM5; // Disable the GPIO power-on default high-impedance mode
 
-//	  initTimer();
+
+	  initTimer();
 	  initDisplay();
 	  outputDisplayBuffer(0, 96);
 	  _BIS_SR (GIE);
@@ -23,7 +26,7 @@ int main(void) {
 	  outputDisplayBuffer(0,96);
 
 	  while (1) {
-	    menuHandler();
+	    menuHandler(option);
 				    outputDisplayBuffer(0, 96);
 	  }
 

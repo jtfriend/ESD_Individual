@@ -5,16 +5,16 @@
  *      Author: joseph
  */
 
-#include <msp430.h>
+
 #include <string.h>
 #include <stdio.h>
 #include "lcdHandler.h"
 
-void menuHandler(void) {
+void menuHandler(int selectedOption) {
   setText (0, 0, "MENU",1,1);
   char *menuList[] = {"Option1", "Option2", "Option3", "Option4"};
   int position = 30;
-  int selectedOption = 1;
+//  int selectedOption = 1;
   unsigned int i;
  //    int optionCount = (sizeof(menuList)/sizeof(menuList[0]));
 

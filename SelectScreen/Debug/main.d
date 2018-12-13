@@ -9,7 +9,6 @@ main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.3.LTS/include/intrinsics
 main.obj: ../lcdHandler.h
 main.obj: ../menuHandler.h
 main.obj: ../timer.h
-main.obj: ../ADC_1.h
 main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.3.LTS/include/stdio.h
 main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.3.LTS/include/_ti_config.h
 main.obj: C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.3.LTS/include/linkage.h
@@ -28,7 +27,6 @@ C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.3.LTS/include/intrinsics_legacy_un
 ../lcdHandler.h: 
 ../menuHandler.h: 
 ../timer.h: 
-../ADC_1.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.3.LTS/include/stdio.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.3.LTS/include/_ti_config.h: 
 C:/ti/ccsv8/tools/compiler/ti-cgt-msp430_18.1.3.LTS/include/linkage.h: 

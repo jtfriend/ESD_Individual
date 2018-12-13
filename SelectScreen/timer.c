@@ -5,12 +5,22 @@
  *      Author: Len Biro
  */
 #include <msp430.h>
+
 int heartbeat = 1;
 int adcReading = 1;
+int step = 1;
+int option = 1;
 
 #pragma vector=TIMER0_A0_VECTOR
 
 __interrupt void Timer0_A0(void) { // Timer0 A0 1ms interrupt service routine
+
+  step++;
+
+  if (step >= 3000) {
+    step = 0;
+    option++;
+  }
 
 	//Time to take a reading
 	adcReading++;
@@ -25,6 +35,9 @@ __interrupt void Timer0_A0(void) { // Timer0 A0 1ms interrupt service routine
 		P4OUT ^= 0x40;
 	}
 } //Timer
+
+
+
 
 void initTimer(void) {
     P4DIR &= ~0x40; //p4.6
